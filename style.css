@@ -178,12 +178,24 @@
 }
 
 @layer layout {
+  .flex-group {
+    display:flex;
+    gap:.5rem;
+    flex-wrap: wrap;
+  }
   .flow > * + * {
     margin-top: 1em;
   }
   .grid-flow {
     display: grid;
     gap: var(--grid-flow-gap, 1rem);
+  }
+
+  .grid-auto-fit {
+    --auto-fit-min-col-size:250px;
+    display: grid;
+    gap:1rem;
+    grid-template-columns: repeat(auto-fit,minmax(min(var(--auto-fit-min-col-size),100%),1fr));
   }
   .equal-columns {
     display: grid;
@@ -234,6 +246,9 @@
     .wrapper--narrow {
 
     } */
+
+
+
 }
 
 @layer components {
@@ -349,8 +364,16 @@
     }
   }
 
+  .mushroom-guide{
+    --card-title-font-size: var(--font-size-lg);
+    --card-title-color:var(--text-high-contrast);
+
+    --card-gap: .75rem;
+  }
+
   .card {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: var(--card-gap, 1rem);
     padding: 1rem;
     background-color: var(--background-light);
@@ -365,6 +388,46 @@
     font-size: var(--card-title-font-size, var(--font-size-heading-sm));
     color: var(--card-title-color, var(--text-brand));
   }
+
+  .card__note {
+    background-color:  var(--background-extra-light);
+    padding: .75rem;
+    margin-block-start: auto;
+    border-radius: var(--border-radius-2);
+  }
+
+  .tag-list {
+    display: flex;
+    gap: .5rem;
+    flex-wrap:wrap;
+
+    li {
+      padding: 0rem 0.25rem;
+      font-family: var(--ff-heading);
+      font-size: var(--font-size-md);
+      color: var(--text-high-contrast);
+      border-radius: var(--border-radius-1);
+      background-color: var(--tag-bg,red);
+    }
+
+    [data-edible="edible"] {
+      --tag-bg:var(--background-accent-main) ;
+    }
+    [data-edible="toxic"] {
+      --tag-bg:var(--clr-red-500) ;
+    }
+    [data-season="summer"] {
+      --tag-bg:var(--background-accent-main) ;
+    }
+    [data-season="spring"] {
+      --tag-bg:var(--clr-teal-500) ;
+    }
+    [data-season="fall"] {
+      --tag-bg:var(--clr-orange-500) ;
+    }
+  }
+
+  
 
   .button {
     display: inline-flex;
@@ -382,6 +445,14 @@
   .button:focus-visible {
     color: var(--text-high-contrast);
     background-color: var(--background-accent-light);
+  }
+
+  select {
+    background-color: var(--background-accent-main);
+    padding:.5rem 1rem;
+    border:0;
+    border-radius: var(--border-radius-2);
+    color:var(--text-high-contrast);
   }
 
   .site-footer {
@@ -405,6 +476,8 @@
     font-family: var(--ff-heading);
     font-weight: 700;
   }
+
+
 }
 
 @layer utilities {
